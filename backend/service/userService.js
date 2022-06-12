@@ -1,5 +1,4 @@
 const db = require('../config/dbmysql2');
-const ROLES_LIST = require('../config/roles_list');
 
 const getUserByEmail = async (email) => {
   const sql = 'SELECT * FROM users WHERE mail = ?';
@@ -59,7 +58,7 @@ const createUser = async (newUserData) => {
     const mail = newUserData.email.toLowerCase();
     const firstName = newUserData.name;
     const hashedPassword = newUserData.hashPwd;
-    const roleId = 3;
+    const roleId = newUserData?.role || 3;
     const sql = 'INSERT INTO `users` (`mail`, `hashedPassword`, `firstName`, `Roles_roleId`) VALUES (?,?,?,?)';
 
     return db.promise().execute(sql, [mail,hashedPassword, firstName, roleId]);
